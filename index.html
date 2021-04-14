@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #displayContainer {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        height: 100vh;
+      }
+      #timeDisplay {
+        mix-blend-mode: screen;
+        color: black;
+        background-color: white;
+        font-size: 20vw;
+        z-index: 1;
+        text-align: center;
+        line-height: 100vh;
+        width: 100vw;
+      }
+      #kaleidoscope {
+        z-index: 0;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="displayContainer">
+      <div id="timeDisplay"></div>
+    </div>
+
+    <iframe
+      id="kaleidoscope"
+      src="https://www.youtube-nocookie.com/embed/_myturMALJQ?mute=1&autoplay=1&loop=1&playlist=_myturMALJQ&start=4&end=618&controls=0"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+    <!-- <video autoplay muted loop id="kaleidoscope">
+      <source
+        src="https://media2.giphy.com/media/l2JhBCrXMlKWhasBq/giphy.mp4"
+        type="video/mp4"
+      />
+    </video> -->
+    <script>
+      const td = document.getElementById("timeDisplay");
+      let start = localStorage.getItem("start") ?? Date.now();
+      localStorage.setItem("start", start);
+
+      const tick = () => {
+        td.textContent = `${(Date.now() - start).toLocaleString()}ms`;
+        td.style.fontSize = 180 / td.textContent.length + "vw";
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    </script>
+  </body>
+</html>
